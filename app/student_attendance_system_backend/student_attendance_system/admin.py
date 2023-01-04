@@ -2,5 +2,5 @@ from django.contrib import admin
 from .models import *
 # Register your models here.
 
-admin.register(Students)
-admin.register(Attendance)
+admin.site.register(Students)
+admin.site.register(Attendance)
