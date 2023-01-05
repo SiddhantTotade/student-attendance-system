@@ -3,7 +3,14 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
 import { TextField } from '@mui/material';
+import { useState } from 'react';
+import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -14,6 +21,7 @@ const style = {
     borderRadius: '10px',
     boxShadow: 24,
     p: 4,
+    width: '35%'
 };
 
 const button = {
@@ -27,6 +35,64 @@ const button = {
 
 export default function MarkAttendance(props) {
 
+    const [date_hasValue, date_setHasValue] = React.useState(false)
+    const [date_focus, date_setFocused] = React.useState(false)
+    const date_onFocus = () => date_setFocused(true)
+    const date_onBlur = () => date_setFocused(false)
+
+    const [timein_hasValue, timein_setHasValue] = React.useState(false)
+    const [timein_focus, timein_setFocused] = React.useState(false)
+    const timein_onFocus = () => timein_setFocused(true)
+    const timein_onBlur = () => timein_setFocused(false)
+
+    const [timeout_hasValue, timeout_setHasValue] = React.useState(false)
+    const [timeout_focus, timeout_setFocused] = React.useState(false)
+    const timeout_onFocus = () => timeout_setFocused(true)
+    const timeout_onBlur = () => timeout_setFocused(false)
+
+    const [attendanceData, setAttendanceData] = useState({
+        attendance_of_student: "",
+        attendance_date: "",
+        time_checkin: "",
+        time_checkout: "",
+        present_or_absent: false
+    })
+
+    function handleAttendanceData(e) {
+        const newData = { ...attendanceData }
+        newData[e.target.id] = e.target.value
+        setAttendanceData(newData)
+    }
+
+    function handleStudent(e) {
+        attendanceData.attendance_of_student = e.target.value
+    }
+
+    function handleDate(e) {
+        attendanceData.attendance_date = e.target.value
+    }
+
+    function handlePresent(e) {
+        if (attendanceData.present_or_absent === true) {
+            attendanceData.present_or_absent = false
+        }
+        else
+            attendanceData.present_or_absent = e
+    }
+
+    function handleSubmit(e) {
+
+        e.preventDefault();
+        const url = 'http://127.0.0.1:8000/api/attendance/'
+        axios.post(url, {
+            'attendance_of_student': attendanceData.attendance_of_student,
+            'attendance_date': attendanceData.attendance_date,
+            'time_checkin': attendanceData.time_checkin,
+            'time_checkout': attendanceData.time_checkout,
+            'present_or_absent': attendanceData.present_or_absent,
+        }).then(res => console.log(res)).catch(err => console.log(err))
+    }
+
     return (
         <div>
             <Modal
@@ -35,34 +101,58 @@ export default function MarkAttendance(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" sx={{ marginBottom: '15px' }} variant="h6" component="h2">Create Student</Typography>
-                    <div className='grid gap-5'>
+                    <Typography id="modal-modal-title" sx={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }} variant="h6" component="h2">Mark Attendance</Typography>
+                    <FormControl variant="standard" sx={{ width: '100%' }}>
+                        <InputLabel id="demo-simple-select-standard-label">Student</InputLabel>
+                        <Select
+                            id="student_id"
+                            variant='standard'
+                            onChange={(e) => handleStudent(e)}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            {
+                                props.all_students.map((data) => (
+                                    <MenuItem value={data.id}>{data.student_id} - {data.student_name}</MenuItem>
+                                ))
+                            }
+                        </Select>
+
                         <TextField
-                            id="standard-multiline-flexible"
-                            label="Student Name"
-                            variant="standard"
-                        />
-                        <TextField
-                            id="standard-multiline-flexible"
+                            id="date"
                             label="Date"
                             variant="standard"
-                            type='date'
+                            onFocus={date_onFocus}
+                            onBlur={date_onBlur}
+                            onChange={(e) => { handleDate(e); if (e.target.value) date_setHasValue(true); else date_setHasValue(false); }} type={date_hasValue || date_focus ? "date" : "text"}
                         />
+
                         <TextField
-                            id="standard-multiline-flexible"
+                            id="time_checkin"
                             label="In Time"
                             variant="standard"
-                            type='time'
+                            onFocus={timein_onFocus}
+                            onBlur={timein_onBlur}
+                            onChange={(e) => { handleAttendanceData(e); if (e.target.value) timein_setHasValue(true); else timein_setHasValue(false); }} type={timein_hasValue || timein_focus ? "time" : "text"}
                         />
+
+
                         <TextField
-                            id="standard-multiline-flexible"
+                            id="time_checkout"
                             label="Out Time"
                             variant="standard"
-                            type='time'
+                            onFocus={timeout_onFocus}
+                            onBlur={timeout_onBlur}
+                            onChange={(e) => { handleAttendanceData(e); if (e.target.value) timeout_setHasValue(true); else timeout_setHasValue(false); }} type={timeout_hasValue || timeout_focus ? "time" : "text"}
                         />
-                    </div>
+                        <div className='flex items-center'>
+                            <Checkbox onChange={(e) => handlePresent(true)} />
+                            <h4>Present</h4>
+                        </div>
+                    </FormControl>
                     <div className='gap-3 flex justify-end'>
-                        <Button sx={button} onClick={props.onClose} >Mark Attendance</Button>
+                        <Button sx={button} onClick={handleSubmit} >Mark Attendance</Button>
                         <Button sx={button} onClick={props.onClose} >Close</Button>
                     </div>
                 </Box>

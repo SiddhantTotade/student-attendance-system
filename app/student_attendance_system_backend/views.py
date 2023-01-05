@@ -32,6 +32,7 @@ class AttendanceAPI(APIView):
 
     def post(self,request):
         attendance_data = AttendanceSerialzier(data=request.data)
+        print(attendance_data)
         
         if attendance_data.is_valid():
             attendance_data.save()

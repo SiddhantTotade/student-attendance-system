@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import CreateStudentModal from './CreateStudent';
 import MarkAttendance from './Attendance';
@@ -60,11 +60,16 @@ export default function AllStudents() {
     return (
         <>
             <div className='w-2/5 m-auto'>
-                <div className='gap-2 flex mb-2'>
-                    <Button sx={button} onClick={handleCreateStudent} >Create Student</Button>
-                    <Button sx={button} onClick={handleMarkAttendance} >Mark Attendance</Button>
+                <div className='flex justify-between items-end'>
+                    <div className='gap-2 flex mb-2'>
+                        <Button sx={button} onClick={handleCreateStudent} >Create Student</Button>
+                        <Button sx={button} onClick={handleMarkAttendance} >Mark Attendance</Button>
+                    </div>
+                    <div>
+                        <Typography>Total Students : {studentsData.length}</Typography>
+                    </div>
                 </div>
-                <div className='w-full'>
+                <div className='w-full mt-3'>
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">
                             <TableHead>
@@ -91,7 +96,7 @@ export default function AllStudents() {
                 </div>
             </div>
             <CreateStudentModal open={createStudent} onClose={handleCreateStudentClose} />
-            <MarkAttendance open={markAttendance} onClose={handleMarkAttendanceClose} />
+            <MarkAttendance open={markAttendance} onClose={handleMarkAttendanceClose} all_students={studentsData} />
         </>
     );
 }
