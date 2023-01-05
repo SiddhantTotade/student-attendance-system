@@ -8,8 +8,6 @@ class StudentsAPI(APIView):
     def get(self, request):
         all_students = Student.objects.all()
 
-        print(all_students)
-
         if all_students:
             student_serializer = StudentSerializer(all_students,many=True)
             return JsonResponse(student_serializer.data,safe=False)

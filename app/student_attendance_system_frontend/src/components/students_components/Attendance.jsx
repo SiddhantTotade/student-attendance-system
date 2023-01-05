@@ -25,7 +25,7 @@ const button = {
     }
 }
 
-export default function CreateStudentModal(props) {
+export default function MarkAttendance(props) {
 
     return (
         <div>
@@ -44,12 +44,25 @@ export default function CreateStudentModal(props) {
                         />
                         <TextField
                             id="standard-multiline-flexible"
-                            label="Student ID"
+                            label="Date"
                             variant="standard"
+                            type='date'
+                        />
+                        <TextField
+                            id="standard-multiline-flexible"
+                            label="In Time"
+                            variant="standard"
+                            type='time'
+                        />
+                        <TextField
+                            id="standard-multiline-flexible"
+                            label="Out Time"
+                            variant="standard"
+                            type='time'
                         />
                     </div>
                     <div className='gap-3 flex justify-end'>
-                        <Button sx={button} onClick={props.onClose} >Save Student</Button>
+                        <Button sx={button} onClick={props.onClose} >Mark Attendance</Button>
                         <Button sx={button} onClick={props.onClose} >Close</Button>
                     </div>
                 </Box>
