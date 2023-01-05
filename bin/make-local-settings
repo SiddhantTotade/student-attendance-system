@@ -1,0 +1,8 @@
+#!/home/siddhanttotade/Documents/Docs/Programming/GIT/student-attendance-system/bin/python
+# -*- coding: utf-8 -*-
+import re
+import sys
+from local_settings import make_local_settings
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(make_local_settings())
