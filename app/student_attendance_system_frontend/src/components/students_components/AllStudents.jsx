@@ -79,7 +79,6 @@ export default function AllStudents() {
                                         key={row.id}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-
                                         <>
                                             <TableCell align="center">{row.student_name}</TableCell>
                                             <TableCell align="center">{row.student_id}</TableCell>

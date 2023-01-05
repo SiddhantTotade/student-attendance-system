@@ -4,6 +4,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { TextField } from '@mui/material';
+import { useState } from 'react';
+import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -27,6 +29,28 @@ const button = {
 
 export default function CreateStudentModal(props) {
 
+    const [studentData, setStudentData] = useState({
+        student_name: "",
+        student_id: ""
+    })
+
+    function handleSubmit(e) {
+
+        e.preventDefault();
+        const url = 'http://127.0.0.1:8000/api/students/'
+        axios.post(url, {
+            'user': 1,
+            'student_name': studentData.student_name,
+            'student_id': studentData.student_id
+        }).then(res => console.log(res)).catch(err => console.log(err))
+    }
+
+    function handleStudentData(e) {
+        const newData = { ...studentData }
+        newData[e.target.id] = e.target.value
+        setStudentData(newData)
+    }
+
     return (
         <div>
             <Modal
@@ -35,21 +59,25 @@ export default function CreateStudentModal(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" sx={{ marginBottom: '15px' }} variant="h6" component="h2">Create Student</Typography>
+                    <Typography id="modal-modal-title" sx={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }} variant="h6" component="h2">Create Student</Typography>
                     <div className='grid gap-5'>
                         <TextField
-                            id="standard-multiline-flexible"
+                            id="student_name"
                             label="Student Name"
                             variant="standard"
+                            value={studentData.student_name}
+                            onChange={(e) => handleStudentData(e)}
                         />
                         <TextField
-                            id="standard-multiline-flexible"
+                            id="student_id"
                             label="Student ID"
                             variant="standard"
+                            value={studentData.id}
+                            onChange={(e) => handleStudentData(e)}
                         />
                     </div>
                     <div className='gap-3 flex justify-end'>
-                        <Button sx={button} onClick={props.onClose} >Save Student</Button>
+                        <Button sx={button} onClick={handleSubmit} >Save Student</Button>
                         <Button sx={button} onClick={props.onClose} >Close</Button>
                     </div>
                 </Box>
