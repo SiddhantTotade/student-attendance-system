@@ -22,3 +22,20 @@ class StudentsAPI(APIView):
             student_data.save()
             return JsonResponse("Student added successfully",safe=False)
         return JsonResponse("Failed to add student",safe=False)
+
+class AttendanceAPI(APIView):
+    def get(self,request):
+        attendance_data = Attendance.objects.all()
+
+        if attendance_data:
+            attendance_serializer = AttendanceSerialzier(attendance_data,many=True)
+            return JsonResponse(attendance_serializer.data,safe=False)
+        return JsonResponse("No attendance found",safe=False)
+
+    def post(self,request):
+        attendance_data = AttendanceSerialzier(data=request.data)
+        
+        if attendance_data.is_valid():
+            attendance_data.save()
+            return JsonResponse("Attendance marked successfully",safe=False)
+        return JsonResponse("Failed to mark attendance",safe=False)

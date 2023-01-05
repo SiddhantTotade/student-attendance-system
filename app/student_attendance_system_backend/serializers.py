@@ -17,6 +17,6 @@ class AttendanceSerialzier(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        attendance = Attendance.objects.create(attendance_of_student = validated_data['attendance_of_student'],attendance_date = validated_data['attendance_date'],time_checkin = validated_data['time_checkin'],time_checkout = validated_data['time_checkout'])
+        attendance = Attendance.objects.create(attendance_of_student = validated_data['attendance_of_student'],attendance_date = validated_data['attendance_date'],time_checkin = validated_data['time_checkin'],time_checkout = validated_data['time_checkout'],present_or_absent = validated_data['present_or_absent'])
         attendance.save()
         return attendance
