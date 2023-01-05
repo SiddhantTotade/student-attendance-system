@@ -41,6 +41,24 @@ export default function AllStudents() {
         fetchData()
     }, [])
 
+    const [allAttendance, setAllAttendance] = useState(false)
+    let i = 0
+
+    useEffect(() => {
+        const url = 'http://127.0.0.1:8000/api/filter-attendance/'
+
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(url)
+                setAllAttendance(response.data)
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData()
+    }, [])
+
     const handleCreateStudent = () => {
         setCreateStudent(true)
     }
@@ -76,6 +94,7 @@ export default function AllStudents() {
                                 <TableRow>
                                     <TableCell align="center" sx={{ fontWeight: 'bold' }}>Student Name</TableCell>
                                     <TableCell align="center" sx={{ fontWeight: 'bold' }}>Student ID</TableCell>
+                                    <TableCell align="center" sx={{ fontWeight: 'bold' }}>Days Attended</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -87,6 +106,7 @@ export default function AllStudents() {
                                         <>
                                             <TableCell align="center">{row.student_name}</TableCell>
                                             <TableCell align="center">{row.student_id}</TableCell>
+                                            <TableCell align="center">{allAttendance[i++]} / 50</TableCell>
                                         </>
                                     </TableRow>
                                 ))}

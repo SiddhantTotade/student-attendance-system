@@ -23,7 +23,17 @@ class StudentsAPI(APIView):
 
 class AttendanceAPI(APIView):
     def get(self,request):
+        student_list=[]
+        student_count_dict={}
+
         attendance_data = Attendance.objects.all()
+
+        for att in attendance_data:
+            if att.present_or_absent == True:
+                student_list.append(att.attendance_of_student)
+
+        for stu in student_list:
+            student_count_dict[stu] = student_list.count(stu)
 
         if attendance_data:
             attendance_serializer = AttendanceSerialzier(attendance_data,many=True)
@@ -38,3 +48,17 @@ class AttendanceAPI(APIView):
             attendance_data.save()
             return JsonResponse("Attendance marked successfully",safe=False)
         return JsonResponse("Failed to mark attendance",safe=False)
+
+def get_attendance_of_each(request):
+    student_list=[]
+    student_count_dict={}
+    attendance = Attendance.objects.all()
+
+    for att in attendance:
+        if att.present_or_absent == True:
+            student_list.append(att.attendance_of_student)
+
+    for stu in student_list:
+        student_count_dict[stu] = student_list.count(stu)
+
+    return JsonResponse(list(student_count_dict.values()),safe=False)
