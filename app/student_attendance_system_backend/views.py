@@ -8,7 +8,17 @@ class StudentsAPI(APIView):
     def get(self, request):
         all_students = Student.objects.all()
 
+        print(all_students)
+
         if all_students:
             student_serializer = StudentSerializer(all_students,many=True)
             return JsonResponse(student_serializer.data,safe=False)
         return JsonResponse("No Students Found",safe=False)
+
+    def post(self,request):
+        student_data = StudentSerializer(data=request.data)
+        
+        if student_data.is_valid():
+            student_data.save()
+            return JsonResponse("Student added successfully",safe=False)
+        return JsonResponse("Failed to add student",safe=False)
