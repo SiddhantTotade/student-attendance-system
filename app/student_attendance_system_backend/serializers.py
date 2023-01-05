@@ -1,7 +1,7 @@
 from .models import *
 from rest_framework import serializers
 
-class StudentSerializer(serializers.Serializer):
+class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
@@ -11,9 +11,9 @@ class StudentSerializer(serializers.Serializer):
         student.save()
         return student
 
-class AttendanceSerialzier(serializers.Serializer):
+class AttendanceSerialzier(serializers.ModelSerializer):
     class Meta:
-        model = Student
+        model = Attendance
         fields = '__all__'
 
     def create(self, validated_data):

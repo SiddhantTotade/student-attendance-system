@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Student(models.Model):
-    student_name= models.Model(max_length = 40,null=True,blank=True)
-    student_id= models.Model(max_length = 40,null=True,blank=True)
+    student_name= models.CharField(max_length=40,null=True,blank=True)
+    student_id= models.CharField(max_length=15,null=True,blank=True)
 
     def __str__(self):
         return self.student_name
