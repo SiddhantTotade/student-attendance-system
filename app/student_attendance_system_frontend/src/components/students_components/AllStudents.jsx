@@ -106,7 +106,7 @@ export default function AllStudents() {
                                         <>
                                             <TableCell align="center">{row.student_name}</TableCell>
                                             <TableCell align="center">{row.student_id}</TableCell>
-                                            <TableCell align="center">{allAttendance[i++]} / 50</TableCell>
+                                            <TableCell align="center">{allAttendance[i] !== null ? allAttendance[i++] : "No Attendance"} / 50</TableCell>
                                         </>
                                     </TableRow>
                                 ))}
