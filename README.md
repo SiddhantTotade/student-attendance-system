@@ -15,3 +15,11 @@
 
 #### Leave a star if you like the project. :star:
 ### Enjoy :relaxed: :relaxed:
+
+## Project Images
+
+![title](https://github.com/SiddhantTotade/student-attendance-system/blob/main/sas_app%20-%20images/sas-1.png)
+![title](https://github.com/SiddhantTotade/student-attendance-system/blob/main/sas_app%20-%20images/sas-2.png)
+![title](https://github.com/SiddhantTotade/student-attendance-system/blob/main/sas_app%20-%20images/sas-3.png)
+![title](https://github.com/SiddhantTotade/student-attendance-system/blob/main/sas_app%20-%20images/sas-4.png)
+![title](https://github.com/SiddhantTotade/student-attendance-system/blob/main/sas_app%20-%20images/sas-5.png)
