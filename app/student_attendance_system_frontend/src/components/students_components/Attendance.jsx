@@ -36,12 +36,9 @@ const button = {
 
 export default function MarkAttendance(props) {
 
-    const [msgRes] = useState({
-        message: "",
-        response: false
-    })
-
-    const [open, setOpen] = useState(false)
+    const [msgRes] = useState({ message: "" })
+    const [openAlert, setOpenAlert] = useState(false)
+    const [alertType, setAlertType] = useState("")
 
     const [date_hasValue, date_setHasValue] = React.useState(false)
     const [date_focus, date_setFocused] = React.useState(false)
@@ -98,13 +95,12 @@ export default function MarkAttendance(props) {
             'time_checkin': attendanceData.time_checkin,
             'time_checkout': attendanceData.time_checkout,
             'present_or_absent': attendanceData.present_or_absent,
-        }).then(setOpen(true)).then(res => msgRes.message = res).catch(err => console.log(err)).finally(props.onClose)
+        }).then(setOpenAlert(true)).then(res => msgRes.message = res).then(res => res.data === "Attendance marked successfully" ? setAlertType("success") : setAlertType("error")).catch(res => console.log(res)).finally(props.onClose)
     }
 
     function handleCloseAlert() {
-        setOpen(false)
+        setOpenAlert(false)
     }
-
 
     return (
         <div>
@@ -165,12 +161,12 @@ export default function MarkAttendance(props) {
                         </div>
                     </FormControl>
                     <div className='gap-3 flex justify-end'>
-                        <Button sx={button} onClick={handleSubmit} >Mark Attendance</Button>
+                        <Button sx={button} onClick={handleSubmit} >Save Attendance</Button>
                         <Button sx={button} onClick={props.onClose} >Close</Button>
                     </div>
                 </Box>
             </Modal>
-            <SuccessAlert open={open} message={msgRes.message.data} onClose={handleCloseAlert} autoHideDuration={3000} />
+            <SuccessAlert open={openAlert} message={msgRes.message.data} onClose={handleCloseAlert} autoHideDuration={3000} severity={alertType} />
         </div >
     );
 }

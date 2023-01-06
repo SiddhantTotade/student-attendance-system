@@ -13,7 +13,7 @@ export default function SuccessAlert(props) {
         <Stack spacing={2} sx={{ width: '100%' }}>
 
             <Snackbar open={props.open} autoHideDuration={props.autoHideDuration} onClose={props.onClose}>
-                <Alert onClose={props.onClose} severity="success" sx={{ width: '100%' }}>
+                <Alert onClose={props.onClose} severity={props.severity} sx={{ width: '100%' }}>
                     {props.message}
                 </Alert>
             </Snackbar>
