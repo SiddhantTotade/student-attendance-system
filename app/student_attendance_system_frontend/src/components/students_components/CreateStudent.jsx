@@ -18,6 +18,7 @@ const style = {
     borderRadius: '10px',
     boxShadow: 24,
     p: 4,
+    width: "35%"
 };
 
 const button = {
@@ -52,7 +53,19 @@ export default function CreateStudentModal(props) {
             'user': 1,
             'student_name': studentData.student_name,
             'student_id': studentData.student_id
-        }).then(setOpenAlert(true)).then(res => msgRes.message = res).then(res => res.data === "Student created successfully" ? setAlertType("success") : setAlertType("error")).catch(res => console.log(res)).finally(props.onClose)
+        }).then(setOpenAlert(true)).then(res => msgRes.message = res).then(res => handleSeverity(res.data)).catch(res => console.log(res)).finally(props.onClose)
+    }
+
+    function handleSeverity(msg) {
+        if (msg === "Student created successfully") {
+            setAlertType("success")
+        }
+        else if (msg === "Student id already exist") {
+            setAlertType("warning")
+        }
+        else {
+            setAlertType("warning")
+        }
     }
 
     function handleStudentData(e) {
@@ -74,7 +87,7 @@ export default function CreateStudentModal(props) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" sx={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }} variant="h6" component="h2">Create Student</Typography>
-                    <FormControl variant="standard" sx={{ width: '100%' }} required>
+                    <FormControl variant="standard" sx={{ width: '100%', gap: "10px" }} required>
                         <TextField
                             id="student_name"
                             label="Student Name"

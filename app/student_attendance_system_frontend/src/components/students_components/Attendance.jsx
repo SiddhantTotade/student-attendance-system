@@ -111,7 +111,7 @@ export default function MarkAttendance(props) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" sx={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }} variant="h6" component="h2">Mark Attendance</Typography>
-                    <FormControl variant="standard" sx={{ width: '100%' }}>
+                    <FormControl variant="standard" sx={{ width: '100%', gap: "10px" }}>
                         <InputLabel id="demo-simple-select-standard-label">Student</InputLabel>
                         <Select
                             id="student_id"
@@ -155,9 +155,9 @@ export default function MarkAttendance(props) {
                             onBlur={timeout_onBlur}
                             onChange={(e) => { handleAttendanceData(e); if (e.target.value) timeout_setHasValue(true); else timeout_setHasValue(false); }} type={timeout_hasValue || timeout_focus ? "time" : "text"}
                         />
-                        <div className='flex items-center'>
+                        <div className='flex border-b border-gray-500 hover:border-gray-900 items-center'>
+                            <h4 className=' text-gray-600'>Present</h4>
                             <Checkbox onChange={(e) => handlePresent(true)} />
-                            <h4>Present</h4>
                         </div>
                     </FormControl>
                     <div className='gap-3 flex justify-end'>
