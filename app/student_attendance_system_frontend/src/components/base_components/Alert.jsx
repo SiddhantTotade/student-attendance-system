@@ -8,14 +8,11 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function SuccessAlert(props) {
-    const [open, setOpen] = React.useState(false);
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
-        setOpen(false);
     };
 
     return (

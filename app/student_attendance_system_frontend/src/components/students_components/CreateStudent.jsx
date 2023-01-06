@@ -51,9 +51,6 @@ export default function CreateStudentModal(props) {
         }).then(msgRes.response = true).then(res => msgRes.message = res).catch(err => console.log(err)).finally(props.onClose)
     }
 
-    console.log(msgRes.message.data);
-    console.log(msgRes.response);
-
     function handleStudentData(e) {
         const newData = { ...studentData }
         newData[e.target.id] = e.target.value

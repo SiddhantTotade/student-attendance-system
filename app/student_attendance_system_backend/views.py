@@ -14,7 +14,12 @@ class StudentsAPI(APIView):
         return JsonResponse("No Students Found",safe=False)
 
     def post(self,request):
+        stu_id = list(request.data.values())[2]
+        all_students = Student.objects.filter(student_id=stu_id).exists()
         student_data = StudentSerializer(data=request.data)
+
+        if all_students:
+            return JsonResponse("Student id already exist",safe=False)
         
         if student_data.is_valid():
             student_data.save()
@@ -32,7 +37,7 @@ class AttendanceAPI(APIView):
 
     def post(self,request):
         attendance_data = AttendanceSerialzier(data=request.data)
-        print(attendance_data)
+
         
         if attendance_data.is_valid():
             attendance_data.save()
