@@ -46,15 +46,6 @@ class AttendanceAPI(APIView):
 
 def get_attendance_of_each(request):
     student_list=[]
-    # student_count_dict={}
-    # attendance = Attendance.objects.all()
-
-    # for att in attendance:
-    #     if att.present_or_absent == True:
-    #         student_list.append(att.attendance_of_student)
-
-    # for stu in student_list:
-    #     student_count_dict[stu] = student_list.count(stu)
     student_data = Student.objects.all()
 
     for data in student_data:
