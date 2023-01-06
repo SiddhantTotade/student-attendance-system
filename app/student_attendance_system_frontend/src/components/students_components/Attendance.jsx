@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import SuccessAlert from '../base_components/Alert';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
@@ -34,6 +35,13 @@ const button = {
 }
 
 export default function MarkAttendance(props) {
+
+    const [msgRes] = useState({
+        message: "",
+        response: false
+    })
+
+    const [open, setOpen] = useState(false)
 
     const [date_hasValue, date_setHasValue] = React.useState(false)
     const [date_focus, date_setFocused] = React.useState(false)
@@ -90,8 +98,13 @@ export default function MarkAttendance(props) {
             'time_checkin': attendanceData.time_checkin,
             'time_checkout': attendanceData.time_checkout,
             'present_or_absent': attendanceData.present_or_absent,
-        }).then(res => console.log(res)).catch(err => console.log(err))
+        }).then(setOpen(true)).then(res => msgRes.message = res).catch(err => console.log(err)).finally(props.onClose)
     }
+
+    function handleCloseAlert() {
+        setOpen(false)
+    }
+
 
     return (
         <div>
@@ -157,6 +170,7 @@ export default function MarkAttendance(props) {
                     </div>
                 </Box>
             </Modal>
+            <SuccessAlert open={open} message={msgRes.message.data} onClose={handleCloseAlert} autoHideDuration={3000} />
         </div >
     );
 }

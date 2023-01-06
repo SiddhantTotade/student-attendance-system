@@ -9,16 +9,11 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function SuccessAlert(props) {
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-    };
-
     return (
         <Stack spacing={2} sx={{ width: '100%' }}>
-            <Snackbar open={props.open} autoHideDuration={6000} >
-                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+
+            <Snackbar open={props.open} autoHideDuration={props.autoHideDuration} onClose={props.onClose}>
+                <Alert onClose={props.onClose} severity="success" sx={{ width: '100%' }}>
                     {props.message}
                 </Alert>
             </Snackbar>
