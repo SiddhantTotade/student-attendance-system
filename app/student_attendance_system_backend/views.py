@@ -18,22 +18,12 @@ class StudentsAPI(APIView):
         
         if student_data.is_valid():
             student_data.save()
-            return JsonResponse("Student added successfully",safe=False)
-        return JsonResponse("Failed to add student",safe=False)
+            return JsonResponse("Student created successfully",safe=False)
+        return JsonResponse("Failed to create student",safe=False)
 
 class AttendanceAPI(APIView):
     def get(self,request):
-        student_list=[]
-        student_count_dict={}
-
         attendance_data = Attendance.objects.all()
-
-        for att in attendance_data:
-            if att.present_or_absent == True:
-                student_list.append(att.attendance_of_student)
-
-        for stu in student_list:
-            student_count_dict[stu] = student_list.count(stu)
 
         if attendance_data:
             attendance_serializer = AttendanceSerialzier(attendance_data,many=True)

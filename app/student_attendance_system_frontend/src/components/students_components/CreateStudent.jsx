@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
+import SuccessAlert from '../base_components/Alert';
 import axios from 'axios';
 
 const style = {
@@ -29,6 +30,11 @@ const button = {
 
 export default function CreateStudentModal(props) {
 
+    const [msgRes] = useState({
+        message: "",
+        response: false
+    })
+
     const [studentData, setStudentData] = useState({
         student_name: "",
         student_id: ""
@@ -42,8 +48,11 @@ export default function CreateStudentModal(props) {
             'user': 1,
             'student_name': studentData.student_name,
             'student_id': studentData.student_id
-        }).then(res => console.log(res)).catch(err => console.log(err))
+        }).then(msgRes.response = true).then(res => msgRes.message = res).catch(err => console.log(err)).finally(props.onClose)
     }
+
+    console.log(msgRes.message.data);
+    console.log(msgRes.response);
 
     function handleStudentData(e) {
         const newData = { ...studentData }
@@ -82,6 +91,9 @@ export default function CreateStudentModal(props) {
                     </div>
                 </Box>
             </Modal>
+            <div className=''>
+                <SuccessAlert open={msgRes.response} message={msgRes.message.data} />
+            </div>
         </div >
     );
 }
